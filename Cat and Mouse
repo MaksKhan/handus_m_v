@@ -1,0 +1,143 @@
+#include <iostream>
+#include <vector>
+#include <map>
+#include <set>
+#include <algorithm>
+#include <cmath>
+#include <queue>
+
+// декартово
+struct Rdec2D {
+    double x = 0.0;
+    double y = 0.0;
+    
+
+
+};
+ 
+// норма в декартовом
+double norm(struct Rdec2D a) {
+    return sqrt(a.x * a.x + a.y * a.y);
+}
+
+
+
+
+
+// скалярное в декартовом
+double dot(struct Rdec2D a, struct Rdec2D b) {
+    double dot;
+    dot = (a.x * b.x + a.y * b.y) / norm(a) / norm(b);
+    return dot;
+
+}
+
+// перевод в полярную
+void toPl(struct Rdec2D dec) {
+    std::cout << "to Pol:" << std::endl;
+    double r = sqrt(dec.x + dec.y);
+    double phi = tan(dec.y / dec.x);
+    std::cout << "Radious: " << r << std::endl << "Angle: " << phi << std::endl;
+}
+
+Rdec2D get_naprav_vector(struct Rdec2D dec) {
+    dec.x = dec.x / abs(dec.x);
+    dec.y = dec.y / abs(dec.y);
+    return dec;
+}
+
+// перегрузка оператора вывода
+std::ostream& operator << (std::ostream& ostrm, const Rdec2D& a) {
+    return ostrm << '(' << a.x << ", " << a.y << ')';
+}
+
+//перегрузка оператора +=
+Rdec2D& operator+=(Rdec2D& a, const Rdec2D& b) {
+    a.x += b.x;
+    a.y += b.y;
+    return a;
+
+}
+
+//перегрузка оператора +
+Rdec2D operator+(const Rdec2D& a, const Rdec2D& b) {
+    return { a.x + b.x, a.y + b.y };
+
+}
+
+//перегрузка оператора -
+Rdec2D operator-(const Rdec2D& a, const Rdec2D& b) {
+    return { a.x - b.x, a.y - b.y };
+
+}
+
+//перегрузка оператора * умножение на число
+Rdec2D operator*(const Rdec2D& a, const int& b) {
+    return { a.x * b, a.y * b };
+
+}
+
+
+
+struct Rpol2D {
+    double r;
+    double phi;
+
+};
+
+
+
+
+
+int main()
+{
+
+    
+    const double speed_mouse = 5; // модуль скорости мышки
+    const double speed_cat = 3; // модуль скорости кошки
+    const double r_kill = 0.5; // радиус поражения кошки
+
+    Rdec2D vector_mouse{ 0, 1 }; // направляющий вектор мышки
+    Rdec2D vector_cat{ 0, 0 }; // направляющий вектор кошки
+
+
+
+    Rdec2D coordinates_mouse = { 0, -10 }; // координаты мышки
+    Rdec2D coordinates_cat = { 10, 0 }; // координаты кошки
+
+    bool flag = true; //не догнала ли кошка
+
+
+    for (int i = 0; i < 1000; i++) {
+        // берем вектор (-x кошки, 0)
+        // он нужен для нахождения направляющего вектора кошки
+        Rdec2D vector_cat_x{ -coordinates_cat.x, 0 };
+
+
+        // направляющий вектор кошки = (-x кошки, 0) - направляющие вектор мышки
+        vector_cat = get_naprav_vector(vector_cat_x) - get_naprav_vector(vector_mouse); // обновляем направляющий вектор кошки
+
+
+        // умножим направляющий вектор на скорость животного,
+        // а потом поделим на тысячу, чтобы смоделировать изменение расстояния за малый промежуток времени
+        coordinates_mouse = vector_mouse * (speed_mouse / 1000);
+        coordinates_cat = vector_cat * (speed_cat / 1000);
+
+
+        // смотрим, попадает ли в радиус поражения
+        if (((coordinates_mouse.x - coordinates_cat.x) < r_kill) && ((coordinates_mouse.y - coordinates_cat.y) < r_kill)) {
+            std::cout << "Cat wins";
+            flag = false;
+            break;
+        }
+    }
+
+    if (flag) {
+        std::cout << "Mouse wins";
+    }
+
+
+    
+    
+    
+}
