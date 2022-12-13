@@ -49,7 +49,7 @@ Rdec2D operator-(const Rdec2D& a, const Rdec2D& b) {
 }
 
 //перегрузка оператора -=
-Rdec2D& operator+=(Rdec2D& a, const Rdec2D& b) {
+Rdec2D& operator-=(Rdec2D& a, const Rdec2D& b) {
     a.x -= b.x;
     a.y -= b.y;
     return a;
@@ -61,8 +61,8 @@ Rdec2D operator*(const Rdec2D& a, const double& b) {
     return newV;
 }
 
-//перегрузка оператора / умножение на число
-Rdec2D operator*(const Rdec2D& a, const double& b) {
+//перегрузка оператора / деление на число
+Rdec2D operator/(const Rdec2D& a, const double& b) {
     Rdec2D newV{ a.x / b, a.y / b };
     return newV;
 }
