@@ -1,13 +1,4 @@
 #include <iostream>
-#include <vector>
-#include <map>
-#include <set>
-#include <algorithm>
-#include <cmath>
-#include <queue>
-#include <fstream>
-#define _USE_MATH_DEFINES
-
 
 int main()
 {
