@@ -22,5 +22,6 @@ int main() {
             flag = false;
         }
     }
+    //fdsf
     std::cout << sum;
 }
