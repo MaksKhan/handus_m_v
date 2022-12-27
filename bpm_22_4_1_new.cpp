@@ -1,11 +1,6 @@
 #include <iostream>
-#include <vector>
-#include <map>
-#include <set>
-#include <algorithm>
 #include <cmath>
-#include <queue>
-#include <fstream>
+
 
 
 int factorial(int x) {
